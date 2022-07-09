@@ -1,0 +1,61 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# Game to help develop speed when typing for python.coding
+
+import random
+import time
+
+
+#List of common keyboard strokes
+list_ =  [ "*","(",")","_","+",
+         "{","}","|","[","]","\\",
+         ":",'"',"'",";","'",
+         "<",">","?",",",".","?",
+         "%","#","!","~","`" ]
+
+# Initialise Input
+new_input = ""
+scores = 0
+count = 0
+
+print("Develop your strenght for touch common sytax characters")
+print ("<---------------------------------------------------->\n")
+print("GO!\n\n")
+start_time = time.perf_counter()
+
+# Game will continue untile the user types "quit" or if count gets to 10
+while new_input != "quit" and count < 11 :
+
+    #Randomly choose a stroke from the list_
+    key_ = random.choice(list_)
+    print("_______\n")
+    print(key_)
+    print("_______\n")
+
+    #User inputs the matching key
+    new_input = input("")
+    count += 1
+
+    #If the user input matches the key add 1 to total score
+    if new_input == key_:
+        scores += 1
+
+#Once loop is complete, stop the timer
+stop_time = time.perf_counter()
+
+#Calculate score and time paramaters and print outcome
+
+total_time = round(stop_time - start_time,2)
+total_score = round((scores / count) * 100 ,2)
+
+#Encourage player
+if total_score < 75:
+    print("Poor effort, why not have another go?\n")
+else:
+    print("Great job speedy fingers!\n")
+
+#Print Results
+print ("<---------------------------------------------------->\n")
+print(f"Your time is {total_time} seconds")
+print(f"Your accuracy is {total_score}%")

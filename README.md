@@ -1,12 +1,20 @@
 # Increase Your Code Syntax Speed
 
-Do you want to improve your Syntax Fingers?
+### Do you want to improve your Syntax Fingers?
 
-Try this fun game that you can run in your terminal.
+## Game runs in your python terminal.
+- Clear the terminal `clear`
+- Run `cd ./keystrole_practice`
+- python Syntax_Game
+- Press up arrow to restart
+- Beat your score.
 
-Practice your keystoke for uncommon characters by entering the correct key, and see if you can beat your score.
 
-Designed to increase speed and efficiency when learning to program.
+![Happy Syntax](terminal_game.png)
 
-- Note: "clear" your terminal first 
+
+- Designed to increase speed and efficiency when learning to program.
+- Develop your strenght for touch common sytax characters
+
+
 
