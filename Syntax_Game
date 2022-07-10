@@ -79,7 +79,7 @@ if new_input != "quit":
         print("High Score !!!\n")
     if total_score == 100:
         print("Perfect Accuracy\n")
-    if total_score >= 80:
+    if total_score >= 80 and total_score < 100:
         print("Good Accuracy\n")
     if total_time < 18 and total_score > 75 :
         print("Great job speedy fingers!\n")
