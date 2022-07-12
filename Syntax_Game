@@ -3,56 +3,65 @@
 
 # Game to help develop speed when typing for python.coding
 
+#Import Libraries
+import time
 from hashlib import new
 import random
-import time
 
 
-#List of common keyboard strokes
+
+#List of common keyboard strokes for programmers
 list_ =  [ "*","(",")","_","+",
          "{","}","|","[","]","\\",
          ":",'"',"'",";","'",
          "<",">","?",",",".","?",
          "%","#","!","~","`" ]
 
+
 # Initialise Input
 new_input = ""
 scores = 0
 count = 0
+keystroke_count = 11
 
 print("\n")
 print("<-------------------------------------->\n\n\n")
 
 #User input
 user_range = input("--------------- Press Enter ------------\n\n")
+if user_range == "":
+    user_range = keystroke_count
+elif int(user_range) > keystroke_count:
+    keystroke_count = int(user_range)
 
 #Countdown
 time.sleep(.3)
 
+print("\n")
 print("3\n\n")
 
 time.sleep(1)
 print("2\n\n")
 
 time.sleep(1)
-print("1\n\n")
+print("1\n")
 
 time.sleep(1)
 
 
-print("<-------------------GO!---------------->\n\n")
+print("> GO! >\n")
 
 #Start the clock
 start_time = time.perf_counter()
 
 # Game will continue untile the user types "quit" or if count gets to 10
-while new_input != "quit" and count < 11 :
+while new_input != "quit" and count < keystroke_count :
 
     #Randomly choose a stroke from the list_
     key_ = random.choice(list_)
-    print("_______\n")
-    print(f"   {key_}")
-    print("_______\n")
+    print("-------\n")
+    print(f"   {key_}\n")
+    print("-------\n")
 
     #User inputs the matching key
     new_input = input("")
@@ -75,13 +84,13 @@ print ("<-------------------------------------->\n")
 if new_input != "quit":
 
 #High Score
-    if total_time < 15 and total_score == 100:
+    if total_time < (keystroke_count * 1.35) and total_score == 100:
         print("High Score !!!\n")
     if total_score == 100:
         print("Perfect Accuracy\n")
     if total_score >= 80 and total_score < 100:
         print("Good Accuracy\n")
-    if total_time < 18 and total_score > 75 :
+    if total_time < (keystroke_count * 1.6) and total_score > 85 :
         print("Great job speedy fingers!\n")
 
     #Bad Score
@@ -89,7 +98,7 @@ if new_input != "quit":
         print("Want to try that again?..\n")
     if total_score < 75:
         print("You can do better?")
-    if total_time > 20:
+    if total_time > (keystroke_count * 1.8):
         print("Pick up the pace")
 
     #Print Results
