@@ -7,8 +7,8 @@
 import time
 from hashlib import new
 import random
-
-
+import requests
+import json
 
 #List of common keyboard strokes for programmers
 list_ =  [ "*","(",")","_","+",
@@ -17,7 +17,9 @@ list_ =  [ "*","(",")","_","+",
          "<",">","?",",",".","?",
          "%","#","!","~","`" ]
 
-
+#Initiate joke reward for high score
+url = 'https://v2.jokeapi.dev/joke/Any?blacklistFlags=nsfw,religious,political,racist,sexist,explicit&type=single'
+            
 # Initialise Input
 new_input = ""
 scores = 0
@@ -60,7 +62,7 @@ while new_input != "quit" and count < keystroke_count :
     #Randomly choose a stroke from the list_
     key_ = random.choice(list_)
     print("-------\n")
-    print(f"   {key_}\n")
+    print(f"   {key_}")
     print("-------\n")
 
     #User inputs the matching key
@@ -81,29 +83,50 @@ total_score = round((scores / count) * 100 ,2)
 
 #Encourage player dialog
 print ("<-------------------------------------->\n")
-if new_input != "quit":
 
 #High Score
-    if total_time < (keystroke_count * 1.35) and total_score == 100:
-        print("High Score !!!\n")
-    if total_score == 100:
-        print("Perfect Accuracy\n")
-    if total_score >= 80 and total_score < 100:
-        print("Good Accuracy\n")
-    if total_time < (keystroke_count * 1.6) and total_score > 85 :
-        print("Great job speedy fingers!\n")
+if total_time < (keystroke_count * 1.35) and total_score == 100:
+    print("High Score !!!\n")
+    print("You earned a joke\n")
 
-    #Bad Score
-    if total_score == 0:
-        print("Want to try that again?..\n")
-    if total_score < 75:
-        print("You can do better?")
-    if total_time > (keystroke_count * 1.8):
-        print("Pick up the pace")
+    # Execute get request
+    requests.get(url)
 
-    #Print Results
-    print ("<-------------------------------------->\n")
-    print(f"Time: {total_time} seconds")
-    print(f"Accuracy {total_score}%")
+    # Execute GET request and store response
+    response_data = requests.get(url)
+
+    # Get content
+    response_content = response_data.content
+
+    # Formatting as json
+    data = response_data.json()
+    
+    # Parse joke
+    if data["type"] == "twopart":
+        joke = data["setup"] + "\n" + data["delivery"] + "\n"
+    else:
+        joke = data["joke"]  + "\n"
+    print(joke)
+
+#Other Encouragement
+if total_score == 100:
+    print("Perfect Accuracy\n")
+if total_score >= 80 and total_score < 100:
+    print("Good Accuracy\n")
+if total_time < (keystroke_count * 1.6) and total_score > 85 and total_score != 100:
+    print("Great job speedy fingers!\n")
+
+#Bad Score
+if total_score == 0:
+    print("Want to try that again?..\n")
+if total_score < 75:
+    print("You can do better?")
+if total_time > (keystroke_count * 1.8):
+    print("Pick up the pace")
+
+#Print Results
+print ("<-------------------------------------->\n")
+print(f"Time: {total_time} seconds")
+print(f"Accuracy {total_score}%")
 
 # Keyboard Training by Dan Isaacman 
