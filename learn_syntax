@@ -23,37 +23,13 @@ list_ = {"syntax":
             "touch","echo","mkdir", "git add .",
             "git commit -m", "git push", "git clone",
             "git checkout", "git pull", "code", "python",
-            "jupyter lab","conda activate","cp", "git status",
-            "git diff", "git config", "git init", "git branch",
-            "git log", "git merge", "git log", "git show",
-            "git fetch", "git remote add", "git rebase", "git rm",
-            "git mv", "git log", "git reset", "git rebase", "git stash"
+            "jupyter lab","conda activate","cp"
             ],
-        
-        "python":
-            ["if","elif","else","for","and","or","len",
-            "str", "int","float", "==", "!=", "<=", ">=",
-             "is" , "is not" ,"True","False",
-             "pass","while", "print", "from", "import",
-             "def", "return" ,
-             "del","zip",
-             "+=", "-=","*=","/=","%=",
-             ".append",".insert",".remove",".sort","sorted()"
-            ],
-        
-        "pandas":
-            ["loc","iloc",
-            ".Series","index=",".DataFrame","columns"
-            ]
         }
 
 #Initiate joke reward for high score
 url = 'https://v2.jokeapi.dev/joke/Any?blacklistFlags=religious,political,racist,sexist&type=single'
-
-
-#Begin Loop
-
-
+            
 # Initialise Inputs
 new_input = ""
 scores = 0
@@ -65,23 +41,16 @@ char_list = "syntax"
 print("\n")
 print("<-------------------------------------->\n\n\n")
 
-
-#User input. Enter to start or type number or syntax eg (20, or python)
+#User input. Enter to start
 user_range = input("-------------- Press Enter ------------\n\n")
 if user_range == "":
     user_range = keystroke_count
 
-# User can type git to return git Syntax List
 elif user_range == "git":
     char_list =  "git"
 
-# User can type python to return python Syntax List
 elif user_range == "python":
     char_list =  "python"
-
-# User can type pandas to return pandas Syntax List
-elif user_range == "pandas":
-    char_list =  "pandas"
 
 # User can type integer to extend game
 elif int(user_range) > keystroke_count:
@@ -178,11 +147,5 @@ if total_time > (keystroke_count * 1.8):
 print ("<-------------------------------------->\n")
 print(f"Time: {total_time} seconds")
 print(f"Accuracy {total_score}%\n\n")
-
-
-
-# End Loop
-
-
 
 # Keyboard Training by Dan Isaacman 
