@@ -9,34 +9,32 @@ from hashlib import new
 import random
 import requests
 import json
-
-#List of common keyboard strokes for programmers
-list_ =  [ "*","(",")","_","+",
-         "{","}","|","[","]","\\",
-         ":",'"',"'",";","'",
-         "<",">","?",",",".","?",
-         "%","#","!","~","`" ]
+from char import list_
 
 #Initiate joke reward for high score
-url = 'https://v2.jokeapi.dev/joke/Any?blacklistFlags=nsfw,religious,political,racist,sexist,explicit&type=single'
+url = 'https://v2.jokeapi.dev/joke/Any?blacklistFlags=religious,political,racist,sexist&type=single'
             
-# Initialise Input
+# Initialise Inputs
 new_input = ""
 scores = 0
 count = 0
 keystroke_count = 11
+char_list = "syntax"
 
+#Game start
 print("\n")
 print("<-------------------------------------->\n\n\n")
 
-#User input
-user_range = input("--------------- Press Enter ------------\n\n")
+#User input. Enter to start
+user_range = input("-------------- Press Enter ------------\n\n")
 if user_range == "":
     user_range = keystroke_count
+
+# User can type integer to extend game
 elif int(user_range) > keystroke_count:
     keystroke_count = int(user_range)
 
-#Countdown
+#Start Countdown
 time.sleep(.3)
 
 print("\n")
@@ -49,18 +47,17 @@ time.sleep(1)
 print("1\n")
 
 time.sleep(1)
-
-
 print("> GO! >\n")
+
 
 #Start the clock
 start_time = time.perf_counter()
 
-# Game will continue untile the user types "quit" or if count gets to 10
+# Game will continue untile the user types "quit" or if count gets to keystroke_count (default 11)
 while new_input != "quit" and count < keystroke_count :
 
     #Randomly choose a stroke from the list_
-    key_ = random.choice(list_)
+    key_ = random.choice(list_[char_list])
     print("-------\n")
     print(f"   {key_}")
     print("-------\n")
@@ -73,10 +70,10 @@ while new_input != "quit" and count < keystroke_count :
     if new_input == key_:
         scores += 1
 
-#Once loop is complete, stop the timer
+#Once game is complete, stop the timer
 stop_time = time.perf_counter()
 
-#Calculate score and time paramaters and print outcome
+#Calculate score and time paramaters
 
 total_time = round(stop_time - start_time,2)
 total_score = round((scores / count) * 100 ,2)
@@ -84,7 +81,9 @@ total_score = round((scores / count) * 100 ,2)
 #Encourage player dialog
 print ("<-------------------------------------->\n")
 
-#High Score
+#High score will print a joke as reward
+if total_score == 100:
+    print("Perfect Accuracy\n")
 if total_time < (keystroke_count * 1.35) and total_score == 100:
     print("High Score !!!\n")
     print("You earned a joke\n")
@@ -109,8 +108,6 @@ if total_time < (keystroke_count * 1.35) and total_score == 100:
     print(joke)
 
 #Other Encouragement
-if total_score == 100:
-    print("Perfect Accuracy\n")
 if total_score >= 80 and total_score < 100:
     print("Good Accuracy\n")
 if total_time < (keystroke_count * 1.6) and total_score > 85 and total_score != 100:
@@ -127,6 +124,6 @@ if total_time > (keystroke_count * 1.8):
 #Print Results
 print ("<-------------------------------------->\n")
 print(f"Time: {total_time} seconds")
-print(f"Accuracy {total_score}%")
+print(f"Accuracy {total_score}%\n\n")
 
 # Keyboard Training by Dan Isaacman 
