@@ -1,0 +1,194 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# Game to help develop speed when typing for python.coding
+
+#Import Libraries
+import time
+from hashlib import new
+import random
+import requests
+import json
+
+# Initiate dcitionary of lists with syntax sets
+list_ = {"syntax": 
+            [ "*","(",")","_","+",
+            "{","}","|","[","]","\\",
+            ":",'"',"'",";","'",
+            "<",">","?",",",".","?",
+            "%","#","!","~","`","^","&" 
+            ],
+                    
+        "git" :
+            ["cd","cd ~","cd ../","ls","pwd"
+            "touch","echo","mkdir", "git add .",
+            "git commit -m", "git push", "git clone",
+            "git checkout", "git pull", "code", "python",
+            "jupyter lab","conda activate","cp", "git status",
+            "git diff", "git config", "git init", "git branch",
+            "git log", "git merge", "git log", "git show",
+            "git fetch", "git remote add", "git rebase", "git rm",
+            "git mv", "git log", "git reset", "git rebase", "git stash"
+            ],
+        
+        "python":
+            ["if","elif","else","for","break",
+            "and","or","len","input", "range", "in",
+            "str", "int","float", "tuple", "type",
+             "is" , "is not" ,"True","False", "add", "lambda",
+             "pass","while", "print", "from", "import",
+             "def", "return" , ".pop","reverse", "set", ".remove",
+             ".update", ".discard", ".union", ".intersection", "difference",
+             "del","zip", ".values" , ".get", ".setdefault",
+             "+=", "-=","*=","/=","%=","==", "!=", "<=", ">=",
+             ".append",".insert",".remove",".sort","sorted()", "list",
+             "end", "sep" , ".format"
+            ],
+        
+        "pandas":
+            ["loc","iloc", "df",
+            ".read_csv" ,".read_table" ,".read_excel" ,".read_sql",
+            ".read_json" ,".read_html" ,".read_clipboard", ".DataFrame",
+            ".to_csv", ".to_excel", ".to_sql", ".to_json"
+            ".Series",".index=",".DataFrame",".columns",
+            ".head", ".tail",".shape",".info",".describe",".value_counts",".apply",
+            ".isnull" ,".notnull" ,".dropna" ,".fillna" ,".astype" ,".replace" ,
+            ".rename" ,".set_index" ,".sort_values" ,".sort_index" ,
+            ".groupby" ,".pivot" ,".apply" ,".append" ,".concat" , ".join",
+            ".describe" ,".mean" ,".corr" ,".count" ,".max" ,
+            ".min" ,".median" ,".std" 
+            ]
+        }
+
+#Initiate joke reward for high score
+url = 'https://v2.jokeapi.dev/joke/Any?blacklistFlags=religious,political,racist,sexist&type=single'
+
+
+
+
+# Initialise Inputs
+new_input = ""
+scores = 0
+count = 0
+attempt_count = 11
+char_list = "syntax"
+keystroke_count = 0
+
+#Game start
+print("\n")
+print("<-------------------------------------->\n\n\n")
+
+#User input. Enter to start
+user_range = input("-------------- Press Enter ------------\n\n")
+if user_range == "":
+    user_range = attempt_count
+
+#If user inputs git, return git syntax
+elif user_range == "git":
+    char_list =  "git"
+
+#If user inputs python, return python syntax
+elif user_range == "python":
+    char_list =  "python"
+
+# User can type integer to extend game
+elif int(user_range) > attempt_count:
+    attempt_count = int(user_range)
+
+#Start Countdown (3,2,1,GO!)
+time.sleep(.3)
+print("\n")
+print("3\n\n")
+time.sleep(1)
+print("2\n\n")
+time.sleep(1)
+print("1\n")
+time.sleep(1)
+print("> GO! >\n")
+
+#Start the clock
+start_time = time.perf_counter()
+
+# Game will continue untile the user types "quit" or if count gets to attempt_count (default 11)
+while new_input != "quit" and count < attempt_count :
+
+    #Randomly choose a stroke from the list_
+    key_ = random.choice(list_[char_list])
+    print("-------\n")
+    print(f"   {key_}")
+    print("-------\n")
+
+    #User inputs the matching key
+    new_input = input("")
+    count += 1
+
+    #If the user input matches the key add 1 to total score
+    if new_input == key_:
+        scores += 1
+
+    #Find the character length/keystrokes to perfrom high score calculations
+    for strokes in new_input:
+        keystroke_count += len(strokes)
+
+#Once game is complete, stop the timer
+stop_time = time.perf_counter()
+
+#Calculate score and time paramaters
+
+#Calculate total time taken
+total_time = round(stop_time - start_time,2)
+
+#Calculate accuracy as percentage
+total_score = round((scores / count) * 100 ,2)
+
+#Encourage player dialog
+print ("<-------------------------------------->\n")
+
+#High score will print a joke as reward
+if total_score == 100:
+    print("Perfect Accuracy\n")
+
+# If user types with 100% accuracy and types 1 character in 1.35 seconds, print a joke
+if total_time < (keystroke_count * 1.35) and total_score == 100:
+    print("High Score !!!\n")
+    print("You earned a joke\n")
+
+    # Execute get request for joke
+    requests.get(url)
+
+    # Execute GET request and store the joke response
+    response_data = requests.get(url)
+
+    # Get content
+    response_content = response_data.content
+
+    # Formatting as json
+    data = response_data.json()
+    
+    # Parse joke
+    if data["type"] == "twopart":
+        joke = data["setup"] + "\n" + data["delivery"] + "\n"
+    else:
+        joke = data["joke"]  + "\n"
+    print(joke)
+
+#Other Encouragement
+if total_score >= 80 and total_score < 100:
+    print("Good Accuracy\n")
+if total_time < (keystroke_count * 1.6) and total_score > 85 and total_score != 100:
+    print("Great job speedy fingers!\n")
+
+#Bad Score
+if total_score == 0:
+    print("Want to try that again?..\n")
+if total_score < 75:
+    print("You can do better?")
+if total_time > (keystroke_count * 1.8):
+    print("Pick up the pace")
+
+#Print Results
+print ("<-------------------------------------->\n")
+print(f"Time: {total_time} seconds")
+print(f"Accuracy {total_score}%\n\n")
+
+# Syntax Training by Dan Isaacman 
