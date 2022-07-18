@@ -25,7 +25,7 @@ list_ = {"syntax":
 
         #Common git Commands            
         "git" :
-            ["cd","cd ~","cd ../","ls","pwd"
+            ["cd","cd ~","cd ../","ls","pwd",
             "touch","echo","mkdir", "git add .",
             "git commit -m", "git push", "git clone",
             "git checkout", "git pull", "code", "python",
@@ -56,14 +56,14 @@ list_ = {"syntax":
             ["loc","iloc", "df",
             ".read_csv" ,".read_table" ,".read_excel" ,".read_sql",
             ".read_json" ,".read_html" ,".read_clipboard", ".DataFrame",
-            ".to_csv", ".to_excel", ".to_sql", ".to_json"
+            ".to_csv", ".to_excel", ".to_sql", ".to_json",
             ".Series",".index=",".DataFrame",".columns",
             ".head", ".tail",".shape",".info",".describe",".value_counts",".apply",
             ".isnull" ,".notnull" ,".dropna" ,".fillna" ,".astype" ,".replace" ,
             ".rename" ,".set_index" ,".sort_values" ,".sort_index" ,
             ".groupby" ,".pivot" ,".apply" ,".append" ,".concat" , ".join",
             ".describe" ,".mean" ,".corr" ,".count" ,".max" ,
-            ".min" ,".median" ,".std" 
+            ".min" ,".median" ,".std", ".shift", ".merge"
             ]
         }
 
@@ -86,7 +86,7 @@ print("<-------------------------------------->\n\n\n")
 user_range = input("--------------- Press Enter ------------\n\n")
 
 
-#Begin game and allow the player to set parameters
+#Begin game
 while user_range != "quit":
 
     # Initialise Inputs
@@ -97,18 +97,23 @@ while user_range != "quit":
     char_list = "syntax"
     keystroke_count = 0
 
+#User sets game parameters or presses Enter to start
+
+    #If user presses enter, default count is 11 and list is syntax
     if user_range == "":
         user_range = attempt_count
 
     #If user inputs git, return git syntax
     elif user_range == "git":
         char_list =  "git"
-
     #If user inputs python, return python syntax
     elif user_range == "python":
         char_list =  "python"
+    #If user inputs pandas, return pandas syntax
+    elif user_range == "pandas":
+        char_list =  "pandas"
 
-    # User can type integer to extend game
+    # User can type integer to extend game in syntax mode
     elif int(user_range) > attempt_count:
         attempt_count = int(user_range)
 
@@ -126,7 +131,7 @@ while user_range != "quit":
     #Start the clock
     start_time = time.perf_counter()
 
-    # Game will continue untile the user types "quit" or if count gets to attempt_count (default 11)
+    # Game will continue until the user types "quit" or if count gets to attempt_count (default 11)
     while new_input != "quit" and count < attempt_count :
 
         #Randomly choose a stroke from the list_
@@ -162,6 +167,8 @@ while user_range != "quit":
     print ("<-------------------------------------->\n")
 
     #High score will print a joke as reward
+
+    #For perfect accuracy
     if total_score == 100:
         print("Perfect Accuracy\n")
 
@@ -172,13 +179,10 @@ while user_range != "quit":
 
         # Execute get request for joke
         requests.get(url)
-
         # Execute GET request and store the joke response
         response_data = requests.get(url)
-
         # Get content
         response_content = response_data.content
-
         # Formatting as json
         data = response_data.json()
         
