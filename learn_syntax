@@ -217,10 +217,21 @@ while user_range != "quit":
     print("\n")
     print("<-------------------------------------->\n")
     print(f"Time: {total_time} seconds")
-    print(f"Accuracy {total_score}%\n\n")
+    print(f"Accuracy {total_score}%\n")
 
 #Loop trhough the game until user enter quit
-    user_range = input("-------------- Another Round ? ----------\n\n")
+    print("<-------------------------------------->")
+    print("|                                      |")
+    print("|-------------- Press Enter -----------|")
+    print("|                   or                 |")
+    print("|------ type python, pandas, or git ---|")
+    print("|                   or                 |")
+    print("|------- type number to extend game ---|")
+    print("|                                      |")
+    print("|---------- type quit to stop ---------|")
+    print("|                                      |")
+    print("<-------------------------------------->\n\n\n")
+    user_range = input(" ------------- Another Round ? --------- \n\n")
 
 
 # Syntax Training by Dan Isaacman 
